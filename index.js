@@ -29,7 +29,6 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5000
 
 const io = require("socket.io")(http, {
-    pingTimeout: 60000,
     cors: {
         origin: "*",
     },
