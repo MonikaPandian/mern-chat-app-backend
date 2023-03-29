@@ -11,10 +11,11 @@ const http = require('http');
 dotenv.config();
 connectDB();
 const app = express();
-const server = http.createServer(app);
 
 app.use(express.json()); //to accept json data
-app.use(cors());
+app.use(cors({ origin: '*' }))
+
+const server = http.createServer(app);
 
 app.get('/', (req, res) => {
     res.send('API for the MERN chat application working successfully');
@@ -29,7 +30,7 @@ app.use(errorHandler);
 
 const io = require("socket.io")(server, {
     cors: {
-        origin: "https://localhost:3000",
+        origin: "*",
         methods: ["GET", "POST"]
     }
 });
