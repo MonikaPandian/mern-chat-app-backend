@@ -13,7 +13,7 @@ connectDB();
 const app = express();
 
 app.use(express.json()); //to accept json data
-app.use(cors({ origin: '*' }))
+app.use(cors({ origin: "http://localhost:3000" }))
 
 const server = http.createServer(app);
 
