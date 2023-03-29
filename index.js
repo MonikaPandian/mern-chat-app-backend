@@ -6,7 +6,7 @@ const chatRoutes = require("./routes/chatRoutes.js");
 const messageRoutes = require("./routes/messageRoutes.js");
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 const cors = require('cors');
-const http = require('http')
+const http = require('http');
 
 dotenv.config();
 connectDB();
@@ -29,7 +29,11 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000
 
-const io = require("socket.io").listen(server);
+const io = require("socket.io")(server, {
+    cors: {
+        origin: "*"
+    }
+});
 
 io.on("connection", (socket) => {
     console.log("connected to socket.io");
