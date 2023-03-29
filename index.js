@@ -10,9 +10,14 @@ const cors = require('cors');
 dotenv.config();
 connectDB();
 const app = express();
+const http = require('http').Server(app);
 
 app.use(express.json()); //to accept json data
 app.use(cors());
+
+app.get('/', (req, res) => {
+    res.send('API for the MERN chat application working successfully');
+})
 
 app.use('/api/user', userRoutes);
 app.use('/api/chat', chatRoutes);
@@ -23,9 +28,7 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000
 
-const server = app.listen(PORT, console.log(`Server started on PORT ${PORT}`));
-
-const io = require("socket.io")(server, {
+const io = require("socket.io")(http, {
     pingTimeout: 60000,
     cors: {
         origin: "*",
@@ -67,3 +70,5 @@ io.on("connection", (socket) => {
         socket.leave(userData._id);
     });
 });
+
+app.listen(PORT, console.log(`Server started on PORT ${PORT}`));
