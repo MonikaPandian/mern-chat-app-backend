@@ -27,11 +27,10 @@ app.use('/api/message', messageRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000
-
 const io = require("socket.io")(server, {
     cors: {
-        origin: "*"
+        origin: "https://localhost:3000",
+        methods: ["GET", "POST"]
     }
 });
 
@@ -70,5 +69,7 @@ io.on("connection", (socket) => {
         socket.leave(userData._id);
     });
 });
+
+const PORT = process.env.PORT || 8081;
 
 server.listen(PORT, console.log(`Server started on PORT ${PORT}`));
