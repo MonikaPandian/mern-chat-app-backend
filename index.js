@@ -13,7 +13,7 @@ connectDB();
 const app = express();
 
 app.use(express.json()); //to accept json data
-app.use(cors({ origin: "http://localhost:3000" }))
+app.use(cors({ origin: "https://mern-chat-app-eta.vercel.app" }))
 
 const server = http.createServer(app);
 
@@ -30,7 +30,7 @@ app.use(errorHandler);
 
 const io = require("socket.io")(server, {
     cors: {
-        origin: "http://localhost:3000",
+        origin: "https://mern-chat-app-eta.vercel.app",
         methods: ["GET", "POST"]
     }
 });
