@@ -6,11 +6,12 @@ const chatRoutes = require("./routes/chatRoutes.js");
 const messageRoutes = require("./routes/messageRoutes.js");
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 const cors = require('cors');
+const http = require('http')
 
 dotenv.config();
 connectDB();
 const app = express();
-const http = require('http').Server(app);
+const server = http.createServer(app);
 
 app.use(express.json()); //to accept json data
 app.use(cors());
@@ -28,11 +29,7 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000
 
-const io = require("socket.io")(http, {
-    cors: {
-        origin: "*",
-    },
-});
+const io = require("socket.io").listen(server);
 
 io.on("connection", (socket) => {
     console.log("connected to socket.io");
@@ -70,4 +67,4 @@ io.on("connection", (socket) => {
     });
 });
 
-app.listen(PORT, console.log(`Server started on PORT ${PORT}`));
+server.listen(PORT, console.log(`Server started on PORT ${PORT}`));
