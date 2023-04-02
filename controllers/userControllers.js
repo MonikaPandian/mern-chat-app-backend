@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const User = require('../models/userModel')
+const User = require('../models/userModel');
 const generateToken = require("../utils/generateToken");
 const nodeMailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
@@ -78,12 +78,12 @@ const forgotPassword = asyncHandler(async (req, res) => {
         var transporter = nodeMailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'panmonikmm@gmail.com',
+                user: process.env.EMAIL_ID,
                 pass: process.env.EMAIL_APP_PASSWORD
             }
         });
         var mailOptions = {
-            from: 'panmonikmm@gmail.com',
+            from: process.env.EMAIL_ID,
             to: `${user.email}`,
             subject: 'Password reset link from Chat-Box application',
             html: `We have received your request for reset password. Click this link to reset your password.<br>
